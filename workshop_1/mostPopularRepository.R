@@ -1,7 +1,11 @@
 
-repos <- jsonlite::fromJSON("https://api.github.com/users/nikolaypavlov/repos")
+getMostPopularRepoName = function(reposUrl){
+  repos <- jsonlite::fromJSON(reposUrl)
+  
+  mostPopularRepoIndex <- which.max(repos$forks_count + repos$watchers_count)
+  mostPopularRepoName <- repos[mostPopularRepoIndex,"name"]
+  
+  return(mostPopularRepoName)
+}
 
-mostPopularRepoIndex <- which.max(repos$forks_count + repos$watchers_count)
-mostPopularRepoName <- repos[mostPopularRepoIndex,"name"]
-
-print(mostPopularRepoName)
+print(getMostPopularRepoName("https://api.github.com/users/nikolaypavlov/repos"))
